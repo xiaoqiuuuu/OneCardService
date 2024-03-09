@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,6 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DataBase<T extends Identifiable> {
     private List<T> data;
     private String fileName;
+    private Integer index = 20000;
 
     // 考虑多线程请求，需要对数据上锁
     private final Lock lock = new ReentrantLock();
@@ -61,9 +61,18 @@ public class DataBase<T extends Identifiable> {
     public  void loadData() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             data = (List<T>) inputStream.readObject();
+            for(T item : data) {
+                index = Math.max(index , item.getId());
+            }
+            if(data.isEmpty()) {
+                index = 10000;
+            } else {
+                index ++ ;
+            }
         } catch (FileNotFoundException e) {
             // 文件不存在，则创建一个空的用户列表
             data = new ArrayList<>();
+            saveData();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -90,6 +99,7 @@ public class DataBase<T extends Identifiable> {
                     return Result.failure("数据添加失败，ID 重复");
                 }
             }
+            data.setId(index++);
             this.data.add(data);
             saveData();
             return Result.success(data);
@@ -192,6 +202,5 @@ public class DataBase<T extends Identifiable> {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
 
 }

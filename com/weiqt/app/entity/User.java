@@ -33,20 +33,13 @@ public class User implements Identifiable, Serializable {
         balance = 0D;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", card='" + card + '\'' +
-                ", cardPassword='" + cardPassword + '\'' +
                 ", balance=" + balance +
-                ", phone='" + phone + '\'' +
-                ", isDelete=" + isDelete +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", deleteTime=" + deleteTime +
                 '}';
     }
 

@@ -10,12 +10,15 @@ public class Record implements Identifiable, Serializable {
     private Integer userId;
     private Integer op; // 0 表示消费，1表示充值
     private Double amount; // 交易金额
+    private Double balance; // 卡内余额
 
-    public Record(Integer id, Integer userId, Integer op, Double amount) {
-        this.id = id;
+
+    public Record(Integer userId, Integer op, Double amount,Double balance) {
         this.userId = userId;
         this.op = op;
         this.amount = amount;
+        this.balance = balance;
+
 
         isDelete = false;
         createTime = new Date();
@@ -62,7 +65,12 @@ public class Record implements Identifiable, Serializable {
 
     @Override
     public Integer getId() {
-        return null;
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getUserId() {
@@ -75,6 +83,17 @@ public class Record implements Identifiable, Serializable {
 
     public Double getAmount() {
         return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", op=" + op +
+                ", amount=" + amount +
+                ", balance=" + balance +
+                '}';
     }
 }
 

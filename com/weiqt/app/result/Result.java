@@ -1,12 +1,13 @@
 package com.weiqt.app.result;
 
 import javax.naming.spi.DirStateFactory;
+import java.io.Serializable;
 
 /**
  * 一个返回数据格式的类
  */
 
-public class Result<T> {
+public class Result<T> implements Serializable {
     private int code;
     private String message;
     protected T data;
