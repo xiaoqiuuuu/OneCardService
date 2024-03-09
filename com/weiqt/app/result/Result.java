@@ -1,5 +1,7 @@
 package com.weiqt.app.result;
 
+import javax.naming.spi.DirStateFactory;
+
 /**
  * 一个返回数据格式的类
  */
@@ -7,7 +9,7 @@ package com.weiqt.app.result;
 public class Result<T> {
     private int code;
     private String message;
-    private T data;
+    protected T data;
 
     public Result(T data) {
         this.code = 200;
@@ -42,5 +44,30 @@ public class Result<T> {
 
     public static <T> Result<T> failure(int code, String message) {
         return new Result<>(code, message);
+    }
+
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
